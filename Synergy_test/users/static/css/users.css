@@ -1,0 +1,25 @@
+body {
+    padding-top: 50px;
+}
+
+.navbar-nav {
+    float: right;
+}
+
+.row-header {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.text-header {
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.table-header {
+    background-color: #222;
+    color: #9d9d9d;
+}

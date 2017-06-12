@@ -1,0 +1,52 @@
+{% extends "base_template.html" %}
+{% load static %}
+{% block page_content %}
+<div class="container">
+    <div class="row row-header">
+        <div class="col-xs-1">
+            <button type="button" class="btn">
+                <img src="{% static 'img/plus.png' %}" alt="Add" height="42" width="42"/>
+            </button>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Go!</button>
+                </span>
+                <input type="text" class="form-control" placeholder="Search for...">
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <h2 class="text-header">USERS</h2>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <table class="table">
+            <thead class="table-header">
+                <tr>
+                    <th>NAME</th>
+                    <th>E-MAIL</th>
+                    <th>STATUS</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>name</td>
+                    <td>e-mail</td>
+                    <td>status</td>
+                    <td>
+                        <button type="button" class="btn">
+                            <img src="{% static 'img/edit-1.png' %}" alt="Add" height="26" width="26"/>
+                        </button>
+                        <button type="button" class="btn">
+                            <img src="{% static 'img/trash.png' %}" alt="Add" height="26" width="26"/>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

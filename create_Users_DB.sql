@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS Users;
 CREATE DATABASE Users;
 USE Users;
 
@@ -48,3 +49,10 @@ INSERT INTO listeners (name, mail) VALUES ('Fernando Alonso', 'alo@gmail.com');
 INSERT INTO listeners (name, mail) VALUES ('Antonio Giovinazzi', 'gio@gmail.com');
 INSERT INTO listeners (name, mail) VALUES ('Stoffel Vandoorne', 'van@gmail.com');
 INSERT INTO listeners (name, mail) VALUES ('Jenson Button', 'but@gmail.com');
+
+DELIMITER //
+CREATE PROCEDURE getListeners ()
+BEGIN
+	SELECT * FROM listeners;
+END//
+DELIMITER ;
