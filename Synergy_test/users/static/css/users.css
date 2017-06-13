@@ -23,3 +23,7 @@ body {
     background-color: #222;
     color: #9d9d9d;
 }
+
+.table tbody tr td {
+    vertical-align: middle;
+}

@@ -1,0 +1,29 @@
+{% extends "base_template.html" %}
+{% load static %}
+{% block page_content %}
+<div class="container">
+    <div class="row row-header">
+        <div class="col-xs-12">
+            <h2 class="text-header">COURSES</h2>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <table class="table">
+            <thead class="table-header">
+                <tr>
+                    <th>NAME</th>
+                    <th>CODE</th>
+                 </tr>
+            </thead>
+            <tbody>
+                {% for course in course_list %}
+                <tr>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.code }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

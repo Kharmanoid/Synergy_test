@@ -9,12 +9,14 @@
             </button>
         </div>
         <div class="col-xs-3">
-            <div class="input-group">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Go!</button>
-                </span>
-                <input type="text" class="form-control" placeholder="Search for...">
-            </div>
+            <form action="{% url 'user_list' %}" method="get">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">Go!</button>
+                    </span>
+                    <input type="text" class="form-control" name="search" placeholder="Search for name...">
+                </div>
+            </form>
         </div>
         <div class="col-xs-4">
             <h2 class="text-header">USERS</h2>
@@ -28,23 +30,25 @@
                     <th>NAME</th>
                     <th>E-MAIL</th>
                     <th>STATUS</th>
-                    <th>ACTION</th>
+                    <th width="200px">ACTION</th>
                 </tr>
             </thead>
             <tbody>
+                {% for user in user_list %}
                 <tr>
-                    <td>name</td>
-                    <td>e-mail</td>
-                    <td>status</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.mail }}</td>
+                    <td>{{ user.status }}</td>
                     <td>
                         <button type="button" class="btn">
-                            <img src="{% static 'img/edit-1.png' %}" alt="Add" height="26" width="26"/>
+                            <img src="{% static 'img/edit-1.png' %}" alt="Add" height="24" width="24"/>
                         </button>
                         <button type="button" class="btn">
-                            <img src="{% static 'img/trash.png' %}" alt="Add" height="26" width="26"/>
+                            <img src="{% static 'img/trash.png' %}" alt="Add" height="24" width="24"/>
                         </button>
                     </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

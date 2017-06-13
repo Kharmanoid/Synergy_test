@@ -55,4 +55,9 @@ CREATE PROCEDURE getListeners ()
 BEGIN
 	SELECT * FROM listeners;
 END//
+
+CREATE PROCEDURE getCourses ()
+BEGIN
+	SELECT * FROM courses;
+END//
 DELIMITER ;
