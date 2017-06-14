@@ -1,28 +1,46 @@
 {% extends "base_template.html" %}
 {% load static %}
+{% load url_tags %}
 {% block page_content %}
 <div class="container">
     <div class="row row-header">
         <div class="col-xs-1">
             <button type="button" class="btn">
-                <img src="{% static 'img/plus.png' %}" alt="Add" height="42" width="42"/>
+                <img src="{% static 'img/plus.svg' %}" alt="Add" height="42" width="42"/>
             </button>
         </div>
         <div class="col-xs-3">
-            <form action="{% url 'user_list' %}" method="get">
+            <form method="get">
                 <div class="input-group">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="submit">Go!</button>
                     </span>
-                    <input type="text" class="form-control" name="search" placeholder="Search for name...">
+                    <input type="text" class="form-control" name="search" value="{{ user_search }}"
+                           placeholder="Search for name..." >
                 </div>
             </form>
         </div>
         <div class="col-xs-4">
             <h2 class="text-header">USERS</h2>
         </div>
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1">
+            <form method="get">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-togle" data-toggle="dropdown"
+                            aria-has-popup="true" aria-expanded="false">
+                        {{ user_list.paginator.per_page }}
+                        <span class="caret" style="margin-left: 5px"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="?items=10">10</a></li>
+                        <li><a href="?items=15">15</a></li>
+                        <li><a href="?items=20">20</a></li>
+                    </ul>
+                </div>
+            </form>
+        </div>
     </div>
-
     <div class="panel panel-default">
         <table class="table">
             <thead class="table-header">
@@ -41,16 +59,35 @@
                     <td>{{ user.status }}</td>
                     <td>
                         <button type="button" class="btn">
-                            <img src="{% static 'img/edit-1.png' %}" alt="Add" height="24" width="24"/>
+                            <img src="{% static 'img/edit-1.svg' %}" alt="Add" height="24" width="24"/>
                         </button>
                         <button type="button" class="btn">
-                            <img src="{% static 'img/trash.png' %}" alt="Add" height="24" width="24"/>
+                            <img src="{% static 'img/trash.svg' %}" alt="Add" height="24" width="24"/>
                         </button>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if user_list.has_previous %}
+                <a href="{{ request.path }}?page={{ user_list.previous_page_number }}">
+                    <img src="{% static 'img/left-arrow-8.svg' %}" alt="Previous" height="24" width="24"/>
+                </a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ user_list.number }} of {{ user_list.paginator.num_pages }}.
+            </span>
+
+            {% if user_list.has_next %}
+                <a href="{{ request.path }}?page={{user_list.next_page_number }}">
+                    <img src="{% static 'img/right-arrow-10.svg' %}" alt="Next" height="24" width="24"/>
+                </a>
+            {% endif %}
+        </span>
     </div>
 </div>
 {% endblock %}
