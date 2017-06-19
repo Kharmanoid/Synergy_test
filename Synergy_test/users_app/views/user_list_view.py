@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.base import TemplateView
 
-from users.db_access import DBConnector
+from users_app.db_access import DBConnector
 
 
 class UserListView(TemplateView):
@@ -9,7 +9,7 @@ class UserListView(TemplateView):
 
     def get(self, request):
         search = request.GET.get("search")
-        if search:
+        if search is not None:
             request.session["search"] = search
         else:
             search = request.session.get("search", "")
@@ -23,6 +23,9 @@ class UserListView(TemplateView):
             request.session["items_per_page"] = items_per_page
         else:
             items_per_page = request.session.get("items_per_page", "15")
+        user_to_remove = request.GET.get("remove")
+        if user_to_remove:
+            DBConnector().remove_user(user_to_remove)
         context = self.get_context_data(search=search, page=page, items_per_page=items_per_page)
         return self.render_to_response(context)
 

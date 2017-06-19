@@ -27,3 +27,8 @@ body {
 .table tbody tr td {
     vertical-align: middle;
 }
+
+.btn-search {
+    font-size: 0;
+    border-radius: 20px 20px;
+}

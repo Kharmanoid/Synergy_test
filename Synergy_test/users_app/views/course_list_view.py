@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 
-from users.db_access import DBConnector
+from users_app.db_access import DBConnector
 
 
 class CourseListView(TemplateView):

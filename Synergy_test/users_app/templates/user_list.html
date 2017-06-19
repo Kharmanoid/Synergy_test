@@ -1,19 +1,24 @@
 {% extends "base_template.html" %}
 {% load static %}
-{% load url_tags %}
+{% block page_title %}
+    Users
+{% endblock %}
 {% block page_content %}
 <div class="container">
+<!-- START PAGE HEADER -->
     <div class="row row-header">
         <div class="col-xs-1">
-            <button type="button" class="btn">
-                <img src="{% static 'img/plus.svg' %}" alt="Add" height="42" width="42"/>
-            </button>
+            <a href="{% url 'user_create' %}">
+                <img src="{% static 'img/plus.svg' %}" alt="Create" height="42" width="42"/>
+            </a>
         </div>
         <div class="col-xs-3">
             <form method="get">
                 <div class="input-group">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit">Go!</button>
+                        <button class="btn btn-default btn-search" type="submit">
+                            <img src="{% static 'img/search.svg' %}" height="20" width="20">
+                        </button>
                     </span>
                     <input type="text" class="form-control" name="search" value="{{ user_search }}"
                            placeholder="Search for name..." >
@@ -21,7 +26,7 @@
             </form>
         </div>
         <div class="col-xs-4">
-            <h2 class="text-header">USERS</h2>
+            <h2 class="text-header"><b>USERS</b></h2>
         </div>
         <div class="col-xs-3"></div>
         <div class="col-xs-1">
@@ -41,6 +46,7 @@
             </form>
         </div>
     </div>
+<!-- STAR USER LIST TABLE -->
     <div class="panel panel-default">
         <table class="table">
             <thead class="table-header">
@@ -48,7 +54,7 @@
                     <th>NAME</th>
                     <th>E-MAIL</th>
                     <th>STATUS</th>
-                    <th width="200px">ACTION</th>
+                    <th width="150px">ACTION</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,25 +62,30 @@
                 <tr>
                     <td>{{ user.name }}</td>
                     <td>{{ user.mail }}</td>
-                    <td>{{ user.status }}</td>
+                    {% if user.status == 'Inactive' %}
+                        <td style="color: #ff3d3d">{{ user.status }}</td>
+                    {% else %}
+                        <td style="color: #4FBA6F">{{ user.status }}</td>
+                    {% endif %}
                     <td>
-                        <button type="button" class="btn">
-                            <img src="{% static 'img/edit-1.svg' %}" alt="Add" height="24" width="24"/>
-                        </button>
-                        <button type="button" class="btn">
-                            <img src="{% static 'img/trash.svg' %}" alt="Add" height="24" width="24"/>
-                        </button>
+                        <a href="{% url 'user_edit' %}{{ user.id }}" style="text-decoration: none">
+                            <img src="{% static 'img/edit-1.svg' %}" alt="Edit" height="24" width="24"/>
+                        </a>
+                        <a href="{{ request.path }}?remove={{ user.id }}" type="button" class="btn">
+                            <img src="{% static 'img/trash.svg' %}" alt="Remove" height="24" width="24"/>
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+<!-- START PAGINATOR -->
     <div class="pagination">
         <span class="step-links">
             {% if user_list.has_previous %}
                 <a href="{{ request.path }}?page={{ user_list.previous_page_number }}">
-                    <img src="{% static 'img/left-arrow-8.svg' %}" alt="Previous" height="24" width="24"/>
+                    <img src="{% static 'img/left-arrow-green.svg' %}" alt="Previous" height="24" width="24"/>
                 </a>
             {% endif %}
 
@@ -84,7 +95,7 @@
 
             {% if user_list.has_next %}
                 <a href="{{ request.path }}?page={{user_list.next_page_number }}">
-                    <img src="{% static 'img/right-arrow-10.svg' %}" alt="Next" height="24" width="24"/>
+                    <img src="{% static 'img/right-arrow-green.svg' %}" alt="Next" height="24" width="24"/>
                 </a>
             {% endif %}
         </span>

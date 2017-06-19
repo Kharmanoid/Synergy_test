@@ -12,13 +12,14 @@ CREATE TABLE listeners (id     INT AUTO_INCREMENT PRIMARY KEY,
                         mail   VARCHAR(40) NOT NULL UNIQUE,
                         phone  VARCHAR(15) UNIQUE,
                         mobile VARCHAR(15) UNIQUE,
-                        status ENUM('Active', 'Inactive') DEFAULT 'Inactive'
+                        status ENUM('Inactive', 'Active') DEFAULT 'Inactive'
 );
 
 CREATE TABLE finishedCourses (course_id   INT,
                               listener_id INT,
-                              FOREIGN KEY (course_id) REFERENCES courses(id),
-                              FOREIGN KEY (listener_id) REFERENCES listeners(id)
+                              FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
+                              FOREIGN KEY (listener_id) REFERENCES listeners(id) ON DELETE CASCADE,
+                              PRIMARY KEY (course_id, listener_id)
 );
 
 INSERT INTO courses (code, name) VALUES ('A0123656', 'Python-Base');
@@ -53,11 +54,63 @@ INSERT INTO listeners (name, mail) VALUES ('Jenson Button', 'but@gmail.com');
 DELIMITER //
 CREATE PROCEDURE getListeners ()
 BEGIN
-	SELECT * FROM listeners;
+	SELECT id, name, mail, status 
+    FROM listeners;
+END//
+
+CREATE PROCEDURE getListenerDetail (IN user_id INT)
+BEGIN
+	SELECT listeners.*,
+	GROUP_CONCAT( CONCAT(courses.id, ',', courses.name) SEPARATOR ';') AS courses 
+	FROM listeners
+	LEFT JOIN finishedCourses ON listeners.id = finishedCourses.listener_id
+	LEFT JOIN courses ON courses.id = finishedCourses.course_id
+    WHERE listeners.id = user_id
+	GROUP BY listeners.name;
+END//
+
+CREATE PROCEDURE addListener (IN user_name VARCHAR(50),
+                              IN user_mail VARCHAR(40),
+                              IN user_phone  VARCHAR(15),
+                              IN user_mobile  VARCHAR(15),
+                              IN user_status INT)
+BEGIN
+	INSERT INTO listeners (name, mail, phone, mobile, status) 
+    VALUES (user_name, user_mail, user_phone, user_mobile, user_status);
+END//
+
+CREATE PROCEDURE editListener (IN user_id INT,
+                               IN user_mail VARCHAR(40),
+                               IN user_phone  VARCHAR(15),
+                               IN user_mobile  VARCHAR(15),
+                               IN user_status INT)
+BEGIN
+	UPDATE LOW_PRIORITY listeners 
+    SET mail = user_mail, phone = user_phone, mobile = user_mobile, status = user_status
+    WHERE id = user_id;
+END//
+
+CREATE PROCEDURE removeListener (IN user_id INT)
+BEGIN
+	DELETE FROM listeners 
+    WHERE id = user_id;
+END//
+
+CREATE PROCEDURE addListenerCourse (IN listener INT,
+									IN course INT)
+BEGIN
+	INSERT IGNORE INTO finishedCourses (listener_id, course_id) 
+    VALUES (listener, course);
 END//
 
 CREATE PROCEDURE getCourses ()
 BEGIN
 	SELECT * FROM courses;
+END//
+
+CREATE PROCEDURE getCourseName (IN course_id INT)
+BEGIN
+	SELECT name FROM courses
+    WHERE courses.id = course_id;
 END//
 DELIMITER ;
