@@ -18,11 +18,31 @@
         <div class="col-xs-1"></div>
     </div>
     <div class="container">
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Create" />
-        </form>
+        <div class="col-xs-4"></div>
+        <div class="col-xs-4">
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form.visible_fields %}
+                <label class="control-label" for="id_{{ field.name }}">
+                    {% if field.field.required %}
+                    <span style="color: red">*</span>
+                    {% endif %}
+                    {{ field.label }}
+                </label>
+                <div class="error-form-field">
+                    {% for error in field.errors %}
+                    <h6 style="color: red">{{ error }}</h6>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ field.as_widget }}
+                    <h6 class="help-block">{{ field.help_text }}</h6>
+                </div>
+                {% endfor %}
+                <input class="btn btn-submit" type="submit" value="Create"/>
+            </form>
+        </div>
+        <div class="col-xs-4"></div>
     </div>
 </div>
 {% endblock %}

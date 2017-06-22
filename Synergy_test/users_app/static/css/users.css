@@ -32,3 +32,20 @@ body {
     font-size: 0;
     border-radius: 20px 20px;
 }
+
+.form-radius {
+    border-radius: 30px;
+}
+
+.form-radius[disabled] {
+    border-radius: 30px;
+    background-color: red;
+}
+
+.btn-submit {
+    background-color: #4FBA6F;
+    border-radius: 30px;
+    padding: 8px 25px;
+    color: white;
+    float: right;
+}

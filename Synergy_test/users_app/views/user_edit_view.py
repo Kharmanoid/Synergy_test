@@ -18,6 +18,7 @@ class UserEditView(FormView):
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
+        print(request.POST)
         self.user_id = request.POST.get("id")
         course_id = request.POST.get("course")
         if course_id:

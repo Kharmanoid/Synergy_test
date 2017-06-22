@@ -4,6 +4,7 @@
     Change User
 {% endblock %}
 {% block page_content %}
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <div class="container">
 <!-- START PAGE HEADER -->
     <div class="row row-header">
@@ -18,27 +19,55 @@
         <div class="col-xs-1"></div>
     </div>
     <div class="container">
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            {% if available_courses %}
-                <p>
-                    <label for="avail-courses">Courses:</label>
-                    <select id="avail-courses" name="course">
-                        <option value=""></option>
-                        {% for course in available_courses %}
-                            <option value="{{ course.id }}">{{ course.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <input type="submit" value="Add" />
-                </p>
-            {% endif %}
-            {% for k, v in selected_courses.items %}
-                <p>{{ v }}</p>
-            {% endfor %}
-            <input type="submit" value="Save" />
-        </form>
+        <div class="col-xs-4"></div>
+        <div class="col-xs-4">
+            <form method="post">
+                {% csrf_token %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                {% for field in form.visible_fields %}
+                <label class="control-label" for="id_{{ field.name }}">
+                    {% if field.field.required %}
+                    <span style="color: red">*</span>
+                    {% endif %}
+                    {{ field.label }}
+                </label>
+                <div class="error-form-field">
+                    {% for error in field.errors %}
+                    <h6 style="color: red">{{ error }}</h6>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ field.as_widget }}
+                    <h6 class="help-block">{{ field.help_text }}</h6>
+                </div>
+                {% endfor %}
+                {% if available_courses %}
+                    <label for="avail-courses">Courses</label>
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <select class="form-control form-radius" id="avail-courses" name="course">
+                                <option value=""></option>
+                                {% for course in available_courses %}
+                                    <option value="{{ course.id }}">{{ course.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-link" type="submit">
+                                <img src="{% static 'img/plus.svg' %}" alt="Add" height="36" width="36"/>
+                            </button>
+                        </div>
+                    </div>
+                {% endif %}
+                {% for k, v in selected_courses.items %}
+                    <p>{{ v }}</p>
+                {% endfor %}
+                <input class="btn btn-submit" type="submit" value="Save" />
+            </form>
+        </div>
+        <div class="col-xs-4"></div>
     </div>
-
 </div>
 {% endblock %}
