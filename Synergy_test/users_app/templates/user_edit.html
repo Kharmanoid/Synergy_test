@@ -4,7 +4,7 @@
     Change User
 {% endblock %}
 {% block page_content %}
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>-->
 <div class="container">
 <!-- START PAGE HEADER -->
     <div class="row row-header">
@@ -43,9 +43,9 @@
                     <h6 class="help-block">{{ field.help_text }}</h6>
                 </div>
                 {% endfor %}
+                <label for="avail-courses">Courses</label>
                 {% if available_courses %}
-                    <label for="avail-courses">Courses</label>
-                    <div class="row">
+                    <div class="row" style="padding-bottom: 20px">
                         <div class="col-xs-10">
                             <select class="form-control form-radius" id="avail-courses" name="course">
                                 <option value=""></option>
@@ -55,16 +55,31 @@
                             </select>
                         </div>
                         <div class="col-xs-2">
-                            <button class="btn btn-link" type="submit">
-                                <img src="{% static 'img/plus.svg' %}" alt="Add" height="36" width="36"/>
+                            <button class="btn btn-link btn-add-course">
+                                <img src="{% static 'img/plus.svg' %}" alt="Add" height="34" width="34"/>
                             </button>
                         </div>
                     </div>
                 {% endif %}
-                {% for k, v in selected_courses.items %}
-                    <p>{{ v }}</p>
-                {% endfor %}
-                <input class="btn btn-submit" type="submit" value="Save" />
+                <div class="row" style="padding: 0px 15px;">
+                    <table id="course-list">
+                        <tbody>
+                            {% for k, v in selected_courses.items %}
+                            <tr>
+                                <td>
+                                    {{ v }}
+                                    <button class="btn btn-link rem-course">
+                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row row-submit">
+                    <input class="btn btn-submit" type="submit" value="Save" />
+                </div>
             </form>
         </div>
         <div class="col-xs-4"></div>
