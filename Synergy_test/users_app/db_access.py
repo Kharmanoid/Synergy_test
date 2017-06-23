@@ -8,7 +8,7 @@ CACHE = {}
 
 class DBConnector:
     def __init__(self):
-        self.__connection = MySQLdb.connect(db="Users", user="mysql", password="ws3d1xc")
+        self.__connection = MySQLdb.connect(db="Users")
 
     def __del__(self):
         self.__connection.close()

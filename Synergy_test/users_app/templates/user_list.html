@@ -1,5 +1,6 @@
 {% extends "base_template.html" %}
 {% load static %}
+{% load paginator_tags %}
 {% block page_title %}
     Users
 {% endblock %}
@@ -20,7 +21,7 @@
                             <img src="{% static 'img/search.svg' %}" height="20" width="20">
                         </button>
                     </span>
-                    <input type="text" class="form-control" name="search" value="{{ user_search }}"
+                    <input type="text" class="form-control form-radius" name="search" value="{{ user_search }}"
                            placeholder="Search for name..." >
                 </div>
             </form>
@@ -32,7 +33,7 @@
         <div class="col-xs-1">
             <form method="get">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-togle" data-toggle="dropdown"
+                    <button type="button" class="btn btn-default dropdown-togle form-radius" data-toggle="dropdown"
                             aria-has-popup="true" aria-expanded="false">
                         {{ user_list.paginator.per_page }}
                         <span class="caret" style="margin-left: 5px"></span>
@@ -81,21 +82,33 @@
         </table>
     </div>
 <!-- START PAGINATOR -->
-    <div class="pagination">
+    <div class="pagination" style="">
         <span class="step-links">
             {% if user_list.has_previous %}
                 <a href="{{ request.path }}?page={{ user_list.previous_page_number }}">
-                    <img src="{% static 'img/left-arrow-green.svg' %}" alt="Previous" height="24" width="24"/>
+                    <img src="{% static 'img/left-arrow-green.svg' %}" alt="Previous" height="34" width="34"/>
                 </a>
             {% endif %}
 
-            <span class="current">
-                Page {{ user_list.number }} of {{ user_list.paginator.num_pages }}.
+            {% for previous in user_list.number|previous_range %}
+                <a href="{{ request.path }}?page={{ previous }}" class="btn btn-default page-num">
+                    {{ previous }}
+                </a>
+            {% endfor %}
+
+            <span class="btn page-num current">
+                {{ user_list.number }}
             </span>
+
+            {% for next in user_list.number|next_range:user_list.paginator.num_pages %}
+                <a href="{{ request.path }}?page={{ next }}" class="btn btn-default page-num">
+                    {{ next }}
+                </a>
+            {% endfor %}
 
             {% if user_list.has_next %}
                 <a href="{{ request.path }}?page={{user_list.next_page_number }}">
-                    <img src="{% static 'img/right-arrow-green.svg' %}" alt="Next" height="24" width="24"/>
+                    <img src="{% static 'img/right-arrow-green.svg' %}" alt="Next" height="34" width="34"/>
                 </a>
             {% endif %}
         </span>

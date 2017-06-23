@@ -77,3 +77,21 @@ body {
     color: #4FBA6F;
     text-align: center;
 }
+
+.pagination {
+    width: 100%;
+    text-align: center;
+}
+
+.page-num {
+    border-radius: 30px;
+    text-align: center;
+    text-decoration: none;
+    margin: 3px;
+}
+
+.current {
+    color: #4FBA6F;
+    border-color: #4FBA6F;
+    font-weight: bold;
+}
