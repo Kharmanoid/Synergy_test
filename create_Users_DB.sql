@@ -27,6 +27,8 @@ INSERT INTO courses (code, name) VALUES ('A0184656', 'Python-Database');
 INSERT INTO courses (code, name) VALUES ('B0167256', 'HTML');
 INSERT INTO courses (code, name) VALUES ('C3842656', 'Java-Base');
 INSERT INTO courses (code, name) VALUES ('D6183456', 'JavaScript-Base');
+INSERT INTO courses (code, name) VALUES ('D6520856', 'Django');
+INSERT INTO courses (code, name) VALUES ('E8736208', 'C++');
 
 INSERT INTO listeners (name, mail) VALUES ('Sebastian Vettel', 'vet@gmail.com');
 INSERT INTO listeners (name, mail) VALUES ('Lewis Hamilton', 'ham@gmail.com');                              
@@ -101,6 +103,13 @@ CREATE PROCEDURE addListenerCourse (IN listener INT,
 BEGIN
 	INSERT IGNORE INTO finishedCourses (listener_id, course_id) 
     VALUES (listener, course);
+END//
+
+CREATE PROCEDURE removeListenerCourse (IN listener INT,
+									   IN course INT)
+BEGIN
+    DELETE FROM finishedCourses
+    WHERE listener_id = listener AND course_id = course;
 END//
 
 CREATE PROCEDURE getCourses ()

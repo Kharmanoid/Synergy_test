@@ -70,3 +70,10 @@ body {
     color: black;
     padding: 0px;
 }
+
+.success {
+    border-radius: 30px;
+    border-color: #4FBA6F;
+    color: #4FBA6F;
+    text-align: center;
+}

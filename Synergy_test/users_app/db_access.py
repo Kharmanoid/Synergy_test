@@ -87,6 +87,15 @@ class DBConnector:
         except Exception as e:
             print("### ERROR: ", e)
 
+    def remove_course_from_user(self, user, course):
+        try:
+            coursor = self.__connection.cursor()
+            coursor.callproc(procname="removeListenerCourse", args=(user, course))
+            self.__connection.commit()
+            coursor.close()
+        except Exception as e:
+            print("### ERROR: ", e)
+
     def remove_user(self, user_id):
         try:
             coursor = self.__connection.cursor()

@@ -7,9 +7,11 @@ from users_app.views.course_list_view import CourseListView
 
 urlpatterns = [
     url(r'^$', UserListView.as_view(), name="main_page"),
-    url(r'^users/', UserListView.as_view(), name="user_list"),
-    url(r'user/create/$', UserCreateView.as_view(), name="user_create"),
-    url(r'user/edit/$', UserEditView.as_view(), name="user_edit"),
-    url(r'user/edit/(?P<id>[0-9]+)', UserEditView.as_view()),
-    url(r'^courses/', CourseListView.as_view(), name="course_list")
+    url(r'^users', UserListView.as_view(), name="user_list"),
+    url(r'user/create$', UserCreateView.as_view(), name="user_create"),
+    url(r'user/create/(?P<success>success)', UserCreateView.as_view()),
+    url(r'user/edit$', UserEditView.as_view(), name="user_edit"),
+    url(r'user/edit/(?P<id>[0-9]+)$', UserEditView.as_view()),
+    url(r'user/edit/(?P<id>[0-9]+)/(?P<success>success)', UserEditView.as_view()),
+    url(r'^courses', CourseListView.as_view(), name="course_list")
 ]

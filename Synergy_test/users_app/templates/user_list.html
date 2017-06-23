@@ -68,7 +68,7 @@
                         <td style="color: #4FBA6F">{{ user.status }}</td>
                     {% endif %}
                     <td>
-                        <a href="{% url 'user_edit' %}{{ user.id }}" style="text-decoration: none">
+                        <a href="{% url 'user_edit' %}/{{ user.id }}" style="text-decoration: none">
                             <img src="{% static 'img/edit-1.svg' %}" alt="Edit" height="24" width="24"/>
                         </a>
                         <a href="{{ request.path }}?remove={{ user.id }}" type="button" class="btn">
